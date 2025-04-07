@@ -21,3 +21,9 @@ export class ValidationError extends BaseError {
     super(400, message);
   }
 }
+
+export class UnauthorizedError extends BaseError {
+  constructor(message: string) {
+    super(401, message);
+  }
+}

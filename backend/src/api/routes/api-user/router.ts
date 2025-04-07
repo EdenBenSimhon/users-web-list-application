@@ -10,7 +10,7 @@ import {
 } from '../../controllers/api-user.controller';
 
 export const apiUserRouter = Router();
-// userRouter.use(authMiddleware);
+apiUserRouter.use(authMiddleware);
 
 apiUserRouter.get('/getUsers/:page', getUsers);
 apiUserRouter.get('getUser/:id', getUserById);

@@ -2,10 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import { corsOptions } from './core/config/config';
-import { errorHandler } from './api/middlewares/error';
 import { connectToDatabase } from './core/config/db';
 import { apiUserRouter } from './api/routes/api-user/router';
 import { userRouter } from './api/routes/user/router';
+import { authMiddleware } from './api/middlewares/auth.middleware';
+import { errorHandler } from './api/middlewares/error.middleware';
 dotenv.config();
 
 async function startService() {
@@ -15,8 +16,9 @@ async function startService() {
 
   app.use(cors(corsOptions));
 
-  app.use('/api', apiUserRouter);
   app.use('/user', userRouter);
+
+  app.use('/api', apiUserRouter);
 
   // Add the error handler as the last middleware
   app.use(errorHandler);

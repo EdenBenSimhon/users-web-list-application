@@ -5,7 +5,6 @@ import { UserModel } from '../models/user'; // Import user model
 import { ValidationError } from '../../core/errors/base-error';
 
 export const register = async (req: Request, res: Response) => {
-  console.log(req.body);
   const { username, password } = req.body;
 
   const existingUser = await UserModel.findOne({ username });
@@ -22,7 +21,7 @@ export const register = async (req: Request, res: Response) => {
     process.env.JWT_SECRET as string,
     { expiresIn: '1h' }
   );
-
+  console.log('JWT_SECRET in login:', process.env.JWT_SECRET);
   res.status(201).json({ token });
   return;
 };
