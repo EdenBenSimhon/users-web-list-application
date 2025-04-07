@@ -9,8 +9,8 @@ export const apiService = {
   },
 
   async fetchUserById(id: string) {
+    console.log(id);
     const response = await axios.get(`${API_URL}/${id}`);
-    console.log(response.data);
     return response.data.data;
   },
 

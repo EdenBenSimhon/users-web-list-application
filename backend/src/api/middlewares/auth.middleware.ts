@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { UnauthorizedError } from '../../core/errors/base-error';
 
 export const authMiddleware = (
-  req: Request,
+  req: Request & { user?: { userId: string } },
   res: Response,
   next: NextFunction
 ) => {
@@ -17,7 +17,7 @@ export const authMiddleware = (
       token,
       process.env.JWT_SECRET as string
     ) as jwt.JwtPayload;
-    req.user = decoded.userId as string;
+    req.user = { userId: decoded.userId };
     next();
   } catch (err) {
     throw new UnauthorizedError('Unauthorized: Invalid token');
