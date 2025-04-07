@@ -3,6 +3,8 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import { corsOptions } from './core/config/config';
 import { errorHandler } from './api/middlewares/error';
+import { connectToDatabase } from './core/config/db';
+import { apiUserRouter } from './api/routes/api-user/router';
 import { userRouter } from './api/routes/user/router';
 dotenv.config();
 
@@ -13,10 +15,11 @@ async function startService() {
 
   app.use(cors(corsOptions));
 
-  app.use('/', userRouter);
+  app.use('/api', apiUserRouter);
+  app.use('/user', userRouter);
 
   // Add the error handler as the last middleware
-  // app.use(errorHandler);
+  app.use(errorHandler);
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
@@ -24,3 +27,4 @@ async function startService() {
 }
 
 startService();
+connectToDatabase();

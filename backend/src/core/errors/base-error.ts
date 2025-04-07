@@ -1,6 +1,6 @@
 export class BaseError extends Error {
-  statusCode: number;
-  message: string;
+  public readonly statusCode: number;
+  public readonly message: string;
 
   constructor(statusCode: number, message: string) {
     super(message);

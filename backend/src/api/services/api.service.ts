@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'https://reqres.in/api/users';
 
-export const userService = {
+export const apiService = {
   async fetchUsers(page: string) {
     const response = await axios.get(`${API_URL}?page=${page}`);
     return response.data.data;
@@ -10,6 +10,7 @@ export const userService = {
 
   async fetchUserById(id: string) {
     const response = await axios.get(`${API_URL}/${id}`);
+    console.log(response.data);
     return response.data.data;
   },
 
