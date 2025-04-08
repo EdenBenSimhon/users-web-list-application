@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../core/auth/services/auth.service';
 import { firstValueFrom } from 'rxjs';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly _sharedService: SharedService) {}
   registerForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
@@ -24,12 +25,14 @@ export class RegisterComponent {
 
   async onSubmit() {
     const { username, password } = this.registerForm.value;
-    const isLoggedIn = await firstValueFrom(
-      this.authService.login(username, password)
+    const created = await firstValueFrom(
+      this._sharedService.register(username, password)
     );
-    if (isLoggedIn) {
+    if (created) {
+      alert('User created successfully');
     } else {
-      alert('Invalid credentials');
+      alert('User already exists');
     }
+    this.registerForm.reset();
   }
 }

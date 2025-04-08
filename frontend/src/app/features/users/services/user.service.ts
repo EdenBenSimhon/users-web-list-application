@@ -7,12 +7,13 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../state/user.model';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://localhost:3000/api'; // Base URL to backend API
+  private apiUrl = environment.apiUrl + 'api';
 
   constructor(private http: HttpClient) {}
 

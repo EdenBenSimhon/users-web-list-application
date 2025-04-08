@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterComponent } from './auth/register/register.component';
-import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from '../shared/register/register.component';
+import { LoginComponent } from '../shared/login/login.component';
 import { AuthService } from './auth/services/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,19 +13,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    NoopAnimationsModule,
-
-    RouterModule,
-  ],
+  declarations: [],
+  imports: [CommonModule, RouterModule],
   providers: [AuthService, AuthGuard],
-  exports: [LoginComponent, RegisterComponent],
 })
 export class CoreModule {}

@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable } from 'rxjs';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly _apiUrl = 'http://localhost:3000/user/login';
+  private readonly _apiUrl = environment.apiUrl + 'user/login';
   private tokenKey = 'auth_token';
 
   constructor(
@@ -34,9 +35,6 @@ export class AuthService {
         } else {
           return false;
         }
-      }),
-      catchError((error) => {
-        return [false];
       })
     );
   }
