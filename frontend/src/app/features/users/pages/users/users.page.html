@@ -1,9 +1,7 @@
 
-<ng-container *ngIf ="users$ | async as state">
-    <div *ngFor="let user of state.users">
-        <span>{{ user.id }}</span>
-        <span>{{ user.name }}</span>
-        <span>{{ user.job }}</span>
+<ng-container *ngIf ="users$ | async as state" >
+    <div class="user-page">
+        <app-user-card *ngFor="let user of state.users" [user]="user"></app-user-card>
     </div>
     <button (click)="deleteUser('3')">delete user</button>
     <button (click)="addUser()">add user</button>

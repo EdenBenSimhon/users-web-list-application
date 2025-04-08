@@ -9,13 +9,15 @@ import { provideStore, StoreModule } from '@ngrx/store';
 import { EffectsModule, provideEffects } from '@ngrx/effects';
 import { UserEffects } from './state/user.effects';
 import { AuthGuard } from '../../core/auth/guards/auth.guard';
+import { MatCard, MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [UserCardComponent, UsersPage],
   imports: [
     CommonModule,
     UsersRoutingModule,
-    StoreModule.forFeature('user', usersReducer), // Configure the feature store for 'user'
+    MatCardModule,
+    StoreModule.forFeature('user', usersReducer),
     EffectsModule.forFeature([UserEffects]),
   ],
   providers: [UserService, AuthGuard],
