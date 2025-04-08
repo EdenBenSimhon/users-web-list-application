@@ -1,23 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-// Import your services here
-import { UserService } from './services/user.service';
-
-// Import interceptors
-import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthService } from './auth/services/auth.service';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule],
-  providers: [
-    UserService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true,
-    },
+  declarations: [LoginComponent, RegisterComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    NoopAnimationsModule,
+
+    RouterModule,
   ],
-  exports: [CommonModule],
+  providers: [AuthService, AuthGuard],
+  exports: [LoginComponent, RegisterComponent],
 })
 export class CoreModule {}

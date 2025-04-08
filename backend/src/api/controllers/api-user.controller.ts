@@ -11,6 +11,7 @@ export const getUsers = async (
     const page = req.params.page;
     const users = await apiService.fetchUsers(page);
     if (!users?.length) {
+      console.log('No users found');
       throw new NotFoundError('Users not found');
     }
     res.status(200).json({ users });

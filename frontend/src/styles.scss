@@ -1,37 +1,4 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    background-color: rgb(241,244,249);
-    font-family: 'Arial', sans-serif;
-    color: #333;
-  }
-  
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .page {
-    width: 90%;
-  height: 90%;
-  background-color: #fff;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 8px; 
-  
-  &__header {
-    background-color: #333;
-    color: white;
-  }
-  
-  &__content {
-    background-color: #fff;
-  padding: 20px;
-  }
-  }
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
