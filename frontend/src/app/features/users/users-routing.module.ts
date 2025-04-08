@@ -4,8 +4,7 @@ import { UsersPage } from './pages/users/users.page';
 import { AuthGuard } from '../../core/auth/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: UsersPage },
-  { path: '**', redirectTo: '' },
+  { path: '', component: UsersPage, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

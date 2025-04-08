@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem(this.tokenKey);
     return !!token;
   }
 
@@ -29,7 +29,6 @@ export class AuthService {
     return this._http.post<any>(this._apiUrl, loginPayload).pipe(
       map((response) => {
         if (response && response.token) {
-          console.log('Login successful', response.token);
           localStorage.setItem(this.tokenKey, response.token);
           return true;
         } else {

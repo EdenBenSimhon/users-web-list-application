@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   constructor(
@@ -31,7 +32,6 @@ export class LoginComponent {
       this.authService.login(username, password)
     );
     if (isLoggedIn) {
-      console.log('Login successful');
       this._router.navigate(['/users']);
     } else {
       alert('Invalid credentials');

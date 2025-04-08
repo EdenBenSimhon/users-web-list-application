@@ -31,7 +31,7 @@ export class GetUsersSuccessAction implements Action {
 
 export class UpdateUserAction implements Action {
   public readonly type = UsersActionTypes.UpdateUserAction;
-  constructor(public payload: { id: string }) {}
+  constructor(public payload: { id: string; user: Partial<User> }) {}
 }
 
 export class UpdateUserSuccessAction implements Action {
@@ -41,7 +41,7 @@ export class UpdateUserSuccessAction implements Action {
 
 export class AddUserAction implements Action {
   public readonly type = UsersActionTypes.AddUserAction;
-  constructor() {}
+  constructor(public payload: { name: string; job: string }) {}
 }
 
 export class AddUserSuccessAction implements Action {

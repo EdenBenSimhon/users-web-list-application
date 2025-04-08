@@ -1,0 +1,25 @@
+<app-header></app-header>
+<mat-toolbar class="header">
+    <div class="header__logo">
+        welcome to our app
+    </div>
+  
+    <div class="header__actions">
+      <button mat-icon-button (click)="addUser.emit()" aria-label="Add User">
+        add user
+      </button>
+  
+      <button mat-icon-button (click)="editUser.emit()" aria-label="Edit User">
+        edit
+      </button>
+  
+      <button mat-icon-button (click)="deleteUser.emit()" aria-label="Delete User">
+       delete
+      </button>
+  
+      <button mat-icon-button (click)="logout()" aria-label="Logout">
+        logout
+      </button>
+    </div>
+  </mat-toolbar>
+  

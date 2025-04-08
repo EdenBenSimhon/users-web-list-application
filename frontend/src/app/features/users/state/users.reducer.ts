@@ -4,8 +4,6 @@ import { UsersActions, UsersActionTypes } from './users.actions';
 import { User } from './user.model';
 
 export const usersFeatureKey = 'user';
-export const selectUserState =
-  createFeatureSelector<UserState>(usersFeatureKey);
 
 export interface UserState {
   users: User[];
@@ -14,7 +12,6 @@ export interface UserState {
 }
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>();
 
-// Define the initial state
 export const initialState: UserState = {
   users: [],
   loading: false,
@@ -49,6 +46,7 @@ export function usersReducer(
         users: state.users.map((user) =>
           user.id === action.payload.user.id ? action.payload.user : user
         ),
+
         loading: false,
         error: null,
       };

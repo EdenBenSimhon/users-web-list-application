@@ -5,9 +5,10 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UserService } from './services/user.service';
 import { usersReducer } from './state/users.reducer';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { UsersEffects } from './state/user.effects';
+import { provideStore, StoreModule } from '@ngrx/store';
+import { EffectsModule, provideEffects } from '@ngrx/effects';
+import { UserEffects } from './state/user.effects';
+import { AuthGuard } from '../../core/auth/guards/auth.guard';
 
 @NgModule({
   declarations: [UserCardComponent, UsersPage],
@@ -15,8 +16,8 @@ import { UsersEffects } from './state/user.effects';
     CommonModule,
     UsersRoutingModule,
     StoreModule.forFeature('user', usersReducer), // Configure the feature store for 'user'
-    EffectsModule.forFeature([UsersEffects]),
+    EffectsModule.forFeature([UserEffects]),
   ],
-  providers: [UserService],
+  providers: [UserService, AuthGuard],
 })
 export class UsersModule {}

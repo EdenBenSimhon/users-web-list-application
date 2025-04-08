@@ -1,1 +1,11 @@
-<p>users works!</p>
+
+<ng-container *ngIf ="users$ | async as state">
+    <div *ngFor="let user of state.users">
+        <span>{{ user.id }}</span>
+        <span>{{ user.name }}</span>
+        <span>{{ user.job }}</span>
+    </div>
+    <button (click)="deleteUser('3')">delete user</button>
+    <button (click)="addUser()">add user</button>
+    <button (click)="updateUser('5')">update user</button>
+</ng-container>
