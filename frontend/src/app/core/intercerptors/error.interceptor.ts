@@ -22,7 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
         switch (error.status) {
           case HttpErrorCode.Unauthorized:
             alert('Unauthorized access. Please log in again.');

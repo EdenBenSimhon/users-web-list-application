@@ -28,13 +28,14 @@ export class LoginComponent {
 
   async onSubmit() {
     const { username, password } = this.loginForm.value;
-    const isLoggedIn = await firstValueFrom(
-      this._authService.login(username, password)
-    );
-    if (isLoggedIn) {
-      this._router.navigate(['/users']);
-    } else {
-      alert('Invalid credentials');
+    try {
+      const isLoggedIn = await firstValueFrom(
+        this._authService.login(username, password)
+      );
+      if (isLoggedIn) {
+        this._router.navigate(['/users']);
+      }
+    } catch (error) {
       this.loginForm.reset();
     }
   }

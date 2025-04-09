@@ -31,7 +31,6 @@ export class AuthService {
       map((response) => {
         if (response && response.token) {
           localStorage.setItem(this.tokenKey, response.token);
-          this._router.navigate(['/users']);
           return true;
         } else {
           return false;

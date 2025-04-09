@@ -6,7 +6,6 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../core/auth/services/auth.service';
 import { firstValueFrom } from 'rxjs';
 import { SharedService } from '../service/shared.service';
 import { Router } from '@angular/router';
@@ -42,17 +41,17 @@ export class RegisterComponent {
 
   async onSubmit() {
     const { username, password } = this.registerForm.value;
-    this._sharedService.register(username, password).subscribe({
-      next: (created) => {
-        if (created) {
-          alert('User created successfully');
-          this._router.navigate(['/login']);
-        } else {
-          alert('User already exists');
-        }
-        this.registerForm.reset();
-      },
-    });
+    try {
+      const created = await firstValueFrom(
+        this._sharedService.register(username, password)
+      );
+      if (created) {
+        alert('User created successfully');
+        this._router.navigate(['/login']);
+      }
+    } catch (error) {
+      this.registerForm.reset();
+    }
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
