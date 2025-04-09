@@ -1,11 +1,11 @@
 <mat-card class="card">
   <mat-card-header class="card__header">
     <mat-card-title class="card__header-title">
-      name: {{ user.name }}
+      name: {{ user.first_name }} {{ user.last_name }}
     </mat-card-title>
   </mat-card-header>
-
   <mat-card-content class="card__content">
-    <p class="card__content-id">ID: {{ user.id }}</p>
+    <p class="card__content-id">email: {{ user.email }}</p>
+    <img *ngIf="user.avatar" [src]="user.avatar"  class="card__content__avatar" alt="Avatar" />
   </mat-card-content>
 </mat-card>

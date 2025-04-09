@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from '../services/user.service';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import {
   AddUserAction,
   AddUserSuccessAction,
@@ -14,11 +14,8 @@ import {
   UpdateUserSuccessAction,
   UsersActionTypes,
 } from './users.actions';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
-@Injectable(
-  { providedIn: 'root' } // This makes the effect available in the root injector
-)
+@Injectable({ providedIn: 'root' })
 export class UserEffects {
   constructor(
     private readonly _actions$: Actions,
@@ -28,8 +25,8 @@ export class UserEffects {
   readonly fetchUsers$ = createEffect(() =>
     this._actions$.pipe(
       ofType<GetUsersAction>(UsersActionTypes.GetUsersAction),
-      switchMap(() =>
-        this._userService.getUsers(2).pipe(
+      switchMap(({ payload }) =>
+        this._userService.getUsers(payload.page).pipe(
           map((users) => new GetUsersSuccessAction({ users })),
           catchError((error) => of(new FailedAction({ error })))
         )
@@ -52,9 +49,10 @@ export class UserEffects {
   readonly deleteUser$ = createEffect(() =>
     this._actions$.pipe(
       ofType<DeleteUserAction>(UsersActionTypes.DeleteUserAction),
+      tap((payload) => console.log('deleteUser', payload)),
       switchMap(({ payload }) =>
         this._userService.deleteUser(payload.id).pipe(
-          map((user) => new DeleteUserSuccessAction({ id: payload.id })),
+          map(() => new DeleteUserSuccessAction({ id: payload.id })),
           catchError((error) => of(new FailedAction({ error })))
         )
       )

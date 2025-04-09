@@ -13,13 +13,22 @@ import { MatCard, MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { UserModal } from './modal/user.modal';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [UserCardComponent, UsersPage, HeaderComponent],
+  declarations: [UserCardComponent, UsersPage, HeaderComponent, UserModal],
   imports: [
     CommonModule,
     UsersRoutingModule,
+    MatDialogModule,
     RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatToolbarModule,
     StoreModule.forFeature('user', usersReducer),

@@ -22,7 +22,7 @@ export enum UsersActionTypes {
 
 export class GetUsersAction implements Action {
   public readonly type = UsersActionTypes.GetUsersAction;
-  constructor() {}
+  constructor(public payload: { page: number }) {}
 }
 export class GetUsersSuccessAction implements Action {
   public readonly type = UsersActionTypes.GetUsersSuccessAction;

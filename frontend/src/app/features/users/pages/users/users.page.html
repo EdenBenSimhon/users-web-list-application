@@ -1,10 +1,19 @@
 
 <app-header></app-header>
 <ng-container *ngIf ="users$ | async as state" >
+  
+    <div class="pagination">
+        <button (click)="changePage(-1)" [disabled]="currentPage$.value === 1">Prev</button>
+        <span>Page: {{ currentPage$ | async }}</span>
+        <button (click)="changePage(1)">Next</button>
+      </div>
     <div class="user-page">
-        <app-user-card   *ngFor="let user of state.users" [user]="user"></app-user-card>
+         <button (click)="deleteUser('7')">delete user</button>
+        <button (click)="addUser()">add user</button>
+        <button (click)="updateUser('5')">update user</button>
+        <app-user-card  *ngFor="let user of state.users" [user]="user">
+        </app-user-card>
+       
     </div>
-    <button (click)="deleteUser('3')">delete user</button>
-    <button (click)="addUser()">add user</button>
-    <button (click)="updateUser('5')">update user</button>
+    
 </ng-container>

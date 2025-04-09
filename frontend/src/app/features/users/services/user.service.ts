@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from '../state/user.model';
 import { environment } from '../../../../environment';
 
@@ -20,20 +20,22 @@ export class UserService {
   // Fetch a paginated list of users
   getUsers(page: number): Observable<User[]> {
     const url = `${this.apiUrl}/getUsers/${page}`;
-    const users: User[] = [];
-
-    for (let i = 0; i < 100; i++) {
-      users.push({ id: i + '', name: 'fetch' + i, job: 'fetch' + i });
-    }
-    return of(users);
-    // return this.http.get<User[]>(url);
+    console.log(page);
+    return this.http.get<any>(url).pipe(map((response) => response.users));
   }
 
   // Fetch user details by ID
   getUserById(id: string): Observable<User> {
     // const url = `${this.apiUrl}/getUser/${id}`;
     // return this.http.get<User>(url).pipe();
-    return of({ id, name: 'fetch', job: 'fetch' });
+    return of({
+      id,
+      name: 'fetch',
+      job: 'fetch',
+      email: 'fetch',
+      first_name: 'fetch',
+      last_name: 'fetch',
+    });
   }
 
   // Create a new user
@@ -45,7 +47,14 @@ export class UserService {
     //   }),
     // });
 
-    return of({ id: '100', name: 'created', job: 'created' });
+    return of({
+      id: '100',
+      name,
+      job,
+      email: 'fetch',
+      first_name: 'fetch',
+      last_name: 'fetch',
+    });
   }
 
   // Update user details by ID
@@ -57,13 +66,20 @@ export class UserService {
     //   }),
     // });
 
-    return of({ id, name: 'updated', job: 'updated' });
+    return of({
+      id,
+      name: 'updated',
+      job: 'updated',
+      email: 'fetch',
+      first_name: 'fetch',
+      last_name: 'fetch',
+    });
   }
 
   // Delete user by ID
-  deleteUser(id: string): Observable<void> {
-    // const url = `${this.apiUrl}/deleteUser/${id}`;
-    // return this.http.delete<void>(url);
-    return of(undefined);
+  deleteUser(id: string): Observable<boolean> {
+    const url = `${this.apiUrl}/deleteUser/${id}`;
+    this.http.delete<void>(url);
+    return of(true);
   }
 }

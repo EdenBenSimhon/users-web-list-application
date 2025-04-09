@@ -24,6 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './core/intercerptors/error.interceptor';
 import { RouterModule } from '@angular/router';
+import { AuthInterceptor } from './core/intercerptors/auth.intercerptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
@@ -47,6 +48,7 @@ import { RouterModule } from '@angular/router';
       useClass: ErrorInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

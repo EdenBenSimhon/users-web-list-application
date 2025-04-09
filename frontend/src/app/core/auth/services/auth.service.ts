@@ -9,7 +9,6 @@ import { environment } from '../../../../environment';
 })
 export class AuthService {
   private readonly _apiUrl = environment.apiUrl + 'user/login';
-  private tokenKey = 'auth_token';
 
   constructor(
     private readonly _http: HttpClient,
@@ -17,7 +16,7 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
+    const token = localStorage.getItem(environment.tokenKey);
     return !!token;
   }
 
@@ -30,7 +29,7 @@ export class AuthService {
     return this._http.post<{ token: string }>(this._apiUrl, loginPayload).pipe(
       map((response) => {
         if (response && response.token) {
-          localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem(environment.tokenKey, response.token);
           return true;
         } else {
           return false;
@@ -40,15 +39,15 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem(this.tokenKey);
+    return !!localStorage.getItem(environment.tokenKey);
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(environment.tokenKey);
     this._router.navigate(['/login']);
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return localStorage.getItem(environment.tokenKey);
   }
 }
