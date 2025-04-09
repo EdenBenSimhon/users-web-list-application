@@ -1,0 +1,18 @@
+<h2 mat-dialog-title class="form-dialog__title">{{title}}</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-dialog">
+  <div class="form-dialog__group">
+    <label for="name" class="form-dialog__label">Name</label>
+    <input type="text" id="name" formControlName="name" required class="form-dialog__input"/>
+  </div>
+
+  <div class="form-dialog__group">
+    <label for="job" class="form-dialog__label">Job</label>
+    <input type="text" id="job" formControlName="job" required class="form-dialog__input"/>
+  </div>
+
+  <div class="form-dialog__actions">
+    <button mat-button (click)="dialogRef.close()" class="form-dialog__button">Cancel</button>
+    <button mat-button type="submit" [disabled]="!userForm.valid" class="form-dialog__button">Add User</button>
+  </div>
+</form>

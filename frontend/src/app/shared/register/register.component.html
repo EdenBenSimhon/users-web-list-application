@@ -1,0 +1,26 @@
+<div class="register-page">
+  <mat-card class="register-page__card">
+    <mat-card-header class="register-page__card-header">
+      <mat-card-title class="register-page__card-title">Register</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="register-page__card-content">
+      <form [formGroup]="registerForm" class="register-page__form">
+        <mat-form-field class="register-page__form__field">
+          <input matInput placeholder="User name" formControlName="username" required />
+        </mat-form-field>
+        <mat-form-field class="register-page__form__field">
+          <input matInput placeholder="Password" formControlName="password" type="password" required />
+        </mat-form-field>
+        <mat-form-field class="register-page__form__field">
+          <input matInput placeholder="Confirm password" formControlName="confirmPassword" type="password" required />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="register-page__card__actions">
+      <button class="register-page__button" mat-raised-button [disabled]="!registerForm.valid" (click)="onSubmit()" color="primary">Register</button>
+      <button class="register-page__button" mat-raised-button [routerLink]="['/login']" color="primary">Go to Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
