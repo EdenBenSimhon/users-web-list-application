@@ -1,11 +1,4 @@
-import {
-  createActionGroup,
-  emptyProps,
-  props,
-  Action,
-  ActionsSubject,
-  createAction,
-} from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { User } from './user.model';
 
 export enum UsersActionTypes {

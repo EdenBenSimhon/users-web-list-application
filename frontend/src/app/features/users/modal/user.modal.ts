@@ -5,20 +5,9 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-  BehaviorSubject,
-  combineLatest,
-  debounceTime,
-  startWith,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../state/user.model';
 
 @Component({
@@ -46,6 +35,7 @@ export class UserModal implements OnInit {
       this.updatedUser$.next(true);
     }
   }
+
   ngOnInit(): void {
     if (this.data && this.data.user) {
       this.updatedUser$.next(true);

@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../state/user.model';
 import { environment } from '../../../../environment';
 
@@ -17,27 +13,16 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Fetch a paginated list of users
   getUsers(page: number): Observable<User[]> {
     const url = `${this.apiUrl}/getUsers/${page}`;
     return this.http.get<any>(url).pipe(map((response) => response.users));
   }
 
-  // Fetch user details by ID
   getUserById(id: string): Observable<User> {
-    // const url = `${this.apiUrl}/getUser/${id}`;
-    // return this.http.get<User>(url).pipe();
-    return of({
-      id,
-      name: 'fetch',
-      job: 'fetch',
-      email: 'fetch',
-      first_name: 'fetch',
-      last_name: 'fetch',
-    });
+    const url = `${this.apiUrl}/getUser/${id}`;
+    return this.http.get<any>(url).pipe(map((response) => response.user));
   }
 
-  // Create a new user
   createUser(name: string, job: string): Observable<User> {
     const url = `${this.apiUrl}/createUser`;
     return this.http.post<Partial<User>>(url, { name, job }).pipe(
@@ -55,7 +40,6 @@ export class UserService {
     );
   }
 
-  // Update user details by ID
   updateUser(
     id: string,
     name: string,
@@ -75,7 +59,6 @@ export class UserService {
       );
   }
 
-  // Delete user by ID
   deleteUser(id: string): Observable<void> {
     const url = `${this.apiUrl}/deleteUser/${id}`;
 

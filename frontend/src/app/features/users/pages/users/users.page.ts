@@ -2,6 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
@@ -18,8 +22,12 @@ import { User } from '../../state/user.model';
 import {
   BehaviorSubject,
   distinctUntilChanged,
+  firstValueFrom,
   map,
+  Observable,
   shareReplay,
+  Subject,
+  takeUntil,
   tap,
 } from 'rxjs';
 
@@ -29,35 +37,35 @@ import {
   styleUrl: './users.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersPage {
+export class UsersPage implements OnDestroy {
+  private readonly _destroy$ = new Subject<void>();
   currentPage$ = new BehaviorSubject<number>(1);
   usersPagination$ = this.currentPage$.pipe(
     distinctUntilChanged(),
     tap((page) => this._store.dispatch(new GetUsersAction({ page }))),
-    shareReplay(1)
+    shareReplay(1),
+    takeUntil(this._destroy$)
   );
+  readonly users$ = this._store.select(usersSelectors);
   constructor(
     private readonly _store: Store,
-    private readonly _authSerivce: AuthService,
     private readonly _matDialog: MatDialog
   ) {
     this.usersPagination$.subscribe();
   }
 
-  readonly users$ = this._store.select(usersSelectors);
-
   addUser() {
-    const dialogRef = this._matDialog.open(UserModal, {
-      width: '30rem',
-      data: {},
-    });
-    dialogRef.afterClosed().subscribe((user) => {
-      if (user) {
-        this._store.dispatch(
-          new AddUserAction({ name: user.name, job: user.job })
-        );
-      }
-    });
+    const dialogRef = this._matDialog.open(UserModal, {});
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((user) => {
+        if (user) {
+          this._store.dispatch(
+            new AddUserAction({ name: user.name, job: user.job })
+          );
+        }
+      });
   }
 
   deleteUser(id: string) {
@@ -67,15 +75,13 @@ export class UsersPage {
   changePage(step: number) {
     const current = this.currentPage$.value;
     const nextPage = current + step;
-
     if (nextPage > 0) {
       this.currentPage$.next(nextPage);
     }
   }
 
-  // getUsers() {
-  //   this._store.dispatch(new GetUsersAction({}));
-  // }
-
-  virtualScroll() {}
+  ngOnDestroy() {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
 }

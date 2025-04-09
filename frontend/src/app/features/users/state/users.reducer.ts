@@ -1,5 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { UsersActions, UsersActionTypes } from './users.actions';
 import { User } from './user.model';
 
