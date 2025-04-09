@@ -21,7 +21,6 @@ export const register = async (req: Request, res: Response) => {
     process.env.JWT_SECRET as string,
     { expiresIn: '1h' }
   );
-  console.log('JWT_SECRET in login:', process.env.JWT_SECRET);
   res.status(201).json({ token });
   return;
 };

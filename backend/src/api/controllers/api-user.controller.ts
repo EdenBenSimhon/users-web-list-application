@@ -9,6 +9,7 @@ export const getUsers = async (
 ): Promise<void> => {
   try {
     const page = req.params.page;
+
     const users = await apiService.fetchUsers(page);
     if (!users?.length) {
       throw new NotFoundError('Users not found');

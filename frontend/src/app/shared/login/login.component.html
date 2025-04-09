@@ -1,0 +1,23 @@
+<div class="login-page">
+  <mat-card class="login-page__card">
+    <mat-card-header class="login-page__card__header">
+      <mat-card-title class="login-page__card__title">Login</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="login-page__card__content">
+      <form [formGroup]="loginForm" class="login-page__form">
+        <mat-form-field class="login-page__form__field">
+          <input matInput placeholder="User name" formControlName="username" required />
+        </mat-form-field>
+        <mat-form-field class="login-page__form__field">
+          <input matInput placeholder="Password" formControlName="password" type="password" required />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="login-page__card__actions">
+      <button class="login-page__button" mat-raised-button [disabled]="!loginForm.valid" (click)="onSubmit()" color="primary">Login</button>
+      <button class="login-page__button" mat-raised-button [routerLink]="['/register']" color="primary">Go to Register</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,20 @@
+
+.user-page {
+    display: grid;
+    gap: 1rem 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, auto));
+    grid-template-rows: repeat(auto-fill, minmax(10rem, auto));
+    background-color: #f5f5f5; 
+    overflow: hidden;
+
+}
+.virtual-viewport {
+    height: calc(100vh - 3rem);
+    overflow: auto;
+  }
+
+  body {
+    background-color: #f5f5f5; 
+    margin: 0;
+    padding: 0;
+}
