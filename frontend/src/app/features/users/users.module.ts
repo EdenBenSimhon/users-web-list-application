@@ -12,6 +12,7 @@ import { AuthGuard } from '../../core/auth/guards/auth.guard';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [UserCardComponent, UsersPage, HeaderComponent],
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
     UsersRoutingModule,
     RouterModule,
     MatCardModule,
+    MatToolbarModule,
     StoreModule.forFeature('user', usersReducer),
     EffectsModule.forFeature([UserEffects]),
   ],

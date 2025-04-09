@@ -23,21 +23,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './core/intercerptors/error.interceptor';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HeaderComponent,
-  ],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatToolbarModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    RouterModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
     CoreModule,
@@ -53,6 +49,5 @@ import { ErrorInterceptor } from './core/intercerptors/error.interceptor';
     },
   ],
   bootstrap: [AppComponent],
-  exports: [HeaderComponent],
 })
 export class AppModule {}

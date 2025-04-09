@@ -1,20 +1,9 @@
-<mat-toolbar class="header">
-    <div class="header__logo">
-        welcome to user management system
-    </div>
-    <div class="header__actions">
-      <button  (click)="addUser.emit()" >
-        add user
-      </button>
-      <button (click)="editUser.emit()">
-        edit
-      </button>
-      <button  (click)="deleteUser.emit()" >
-       delete
-      </button>
-      <button (click)="logout()">
-        logout
-      </button>
-    </div>
-  </mat-toolbar>
-  
+<div class="header">
+  <div class="header__logo">welcome to web user management</div>
+  <div class="header__actions">
+    <button class="header__button" (click)="addUser.emit()">add user</button>
+    <button class="header__button" (click)="editUser.emit()">edit</button>
+    <button class="header__button" (click)="deleteUser.emit()">delete</button>
+    <button class="header__button" (click)="logout()">logout</button>
+  </div>
+</div>

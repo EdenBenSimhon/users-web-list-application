@@ -22,7 +22,7 @@ export class UserService {
     const url = `${this.apiUrl}/getUsers/${page}`;
     const users: User[] = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
       users.push({ id: i + '', name: 'fetch' + i, job: 'fetch' + i });
     }
     return of(users);

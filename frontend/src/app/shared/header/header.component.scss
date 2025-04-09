@@ -1,26 +1,37 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    gap: 1rem;
-    width: 100%;
-    background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
 
-    &__actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  
-    button {
-      color: black;
-      border: 1px solid black;  
-      border-radius: 1rem;
-    }
-    button:hover {
-      background-color: white;
+  &__logo {
+    flex: 1;  
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;  
+    gap: 1rem;
+    flex-wrap: wrap; 
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    color: black;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #f0f0f0;
     }
   }
-  
+}
