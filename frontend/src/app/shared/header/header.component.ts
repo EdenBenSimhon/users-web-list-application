@@ -14,11 +14,13 @@ import { AuthService } from '../../core/auth/services/auth.service';
 })
 export class HeaderComponent {
   constructor(private authService: AuthService) {}
-  @Output() addUser = new EventEmitter<void>();
-  @Output() editUser = new EventEmitter<void>();
-  @Output() deleteUser = new EventEmitter<void>();
+  @Output() addUserEvent = new EventEmitter<void>();
 
   logout() {
     this.authService.logout();
+  }
+
+  onAddUser() {
+    this.addUserEvent.emit();
   }
 }

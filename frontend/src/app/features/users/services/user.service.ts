@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../state/user.model';
 import { environment } from '../../../../environment';
 
@@ -20,7 +20,6 @@ export class UserService {
   // Fetch a paginated list of users
   getUsers(page: number): Observable<User[]> {
     const url = `${this.apiUrl}/getUsers/${page}`;
-    console.log(page);
     return this.http.get<any>(url).pipe(map((response) => response.users));
   }
 
@@ -41,45 +40,45 @@ export class UserService {
   // Create a new user
   createUser(name: string, job: string): Observable<User> {
     const url = `${this.apiUrl}/createUser`;
-    // return this.http.post<User>(url, {name,job}, {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //   }),
-    // });
-
-    return of({
-      id: '100',
-      name,
-      job,
-      email: 'fetch',
-      first_name: 'fetch',
-      last_name: 'fetch',
-    });
+    return this.http.post<Partial<User>>(url, { name, job }).pipe(
+      map((response: Partial<User>) => {
+        const [first_name, last_name] = name ? name.split(' ') : ['', ''];
+        return {
+          id: response.id || '',
+          email: 'user@created.com',
+          first_name,
+          last_name,
+          job: response.job,
+          avatar: 'url://default-avatar.png',
+        };
+      })
+    );
   }
 
   // Update user details by ID
-  updateUser(id: string, user: Partial<User>): Observable<User> {
-    // const url = `${this.apiUrl}/updateUser/${id}`;
-    // return this.http.put<User>(url, user, {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //   }),
-    // });
-
-    return of({
-      id,
-      name: 'updated',
-      job: 'updated',
-      email: 'fetch',
-      first_name: 'fetch',
-      last_name: 'fetch',
-    });
+  updateUser(
+    id: string,
+    name: string,
+    job: string
+  ): Observable<{ id: string; name: string; job: string }> {
+    const url = `${this.apiUrl}/updateUser/${id}`;
+    return this.http
+      .put<{ name: string; job: string }>(url, { name, job })
+      .pipe(
+        map((response: { name: string; job: string }) => {
+          return {
+            id,
+            name: response.name,
+            job: response.job,
+          };
+        })
+      );
   }
 
   // Delete user by ID
-  deleteUser(id: string): Observable<boolean> {
+  deleteUser(id: string): Observable<void> {
     const url = `${this.apiUrl}/deleteUser/${id}`;
-    this.http.delete<void>(url);
-    return of(true);
+
+    return this.http.delete<void>(url);
   }
 }

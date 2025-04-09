@@ -2,6 +2,10 @@
   <mat-card-header class="card__header">
     <mat-card-title class="card__header-title">
       name: {{ user.first_name }} {{ user.last_name }}
+      <button mat-button (click)="deleteUser(user.id)">Delete</button>
+      <button mat-button (click)="updateUser(user.id,user)">Update</button>
+    </mat-card-title>
+    <mat-card-title class="card__header-title">
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="card__content">

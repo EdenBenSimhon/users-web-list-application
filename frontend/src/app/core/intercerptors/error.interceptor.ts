@@ -6,6 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 export enum HttpErrorCode {
@@ -16,6 +17,7 @@ export enum HttpErrorCode {
 }
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+  constructor(private readonly _router: Router) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -25,6 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         switch (error.status) {
           case HttpErrorCode.Unauthorized:
             alert('Unauthorized access. Please log in again.');
+            this._router.navigate(['/login']);
             break;
           case HttpErrorCode.BadRequest:
             alert('Bad request. Please check your input.');

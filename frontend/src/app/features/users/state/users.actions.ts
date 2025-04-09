@@ -31,12 +31,12 @@ export class GetUsersSuccessAction implements Action {
 
 export class UpdateUserAction implements Action {
   public readonly type = UsersActionTypes.UpdateUserAction;
-  constructor(public payload: { id: string; user: Partial<User> }) {}
+  constructor(public payload: { id: string; name: string; job: string }) {}
 }
 
 export class UpdateUserSuccessAction implements Action {
   public readonly type = UsersActionTypes.UpdateUserSuccessAction;
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { id: string; name: string; job: string }) {}
 }
 
 export class AddUserAction implements Action {

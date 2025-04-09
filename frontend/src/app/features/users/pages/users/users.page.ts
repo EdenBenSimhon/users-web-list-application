@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
-  OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
@@ -35,16 +33,13 @@ export class UsersPage {
   currentPage$ = new BehaviorSubject<number>(1);
   usersPagination$ = this.currentPage$.pipe(
     distinctUntilChanged(),
-    tap((page) => console.log('page', page)),
     tap((page) => this._store.dispatch(new GetUsersAction({ page }))),
     shareReplay(1)
   );
   constructor(
     private readonly _store: Store,
     private readonly _authSerivce: AuthService,
-    private readonly _matDialog: MatDialog,
-    private readonly _destroy$: DestroyRef,
-    private readonly _cd: ChangeDetectorRef
+    private readonly _matDialog: MatDialog
   ) {
     this.usersPagination$.subscribe();
   }
@@ -66,18 +61,7 @@ export class UsersPage {
   }
 
   deleteUser(id: string) {
-    console.log(id);
     this._store.dispatch(new DeleteUserAction({ id }));
-    this._cd.detectChanges();
-  }
-
-  updateUser(id: string) {
-    this._store.dispatch(
-      new UpdateUserAction({
-        id,
-        user: { first_name: 's Doe', job: 'Developer' },
-      })
-    );
   }
 
   changePage(step: number) {
@@ -93,16 +77,5 @@ export class UsersPage {
   //   this._store.dispatch(new GetUsersAction({}));
   // }
 
-  logOut() {
-    this._authSerivce.logout();
-  }
-
-  openModal(user?: User) {}
-
   virtualScroll() {}
-}
-function takeUntilDestroyed(
-  destroy$: any
-): import('rxjs').OperatorFunction<number, unknown> {
-  throw new Error('Function not implemented.');
 }

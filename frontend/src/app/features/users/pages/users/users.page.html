@@ -1,5 +1,6 @@
 
-<app-header></app-header>
+<app-header
+(addUserEvent)="addUser()"></app-header>
 <ng-container *ngIf ="users$ | async as state" >
   
     <div class="pagination">
@@ -8,11 +9,7 @@
         <button (click)="changePage(1)">Next</button>
       </div>
     <div class="user-page">
-         <button (click)="deleteUser('7')">delete user</button>
-        <button (click)="addUser()">add user</button>
-        <button (click)="updateUser('5')">update user</button>
-        <app-user-card  *ngFor="let user of state.users" [user]="user">
-        </app-user-card>
+      <app-user-card  *ngFor="let user of state.users" [user]="user" ></app-user-card>
        
     </div>
     

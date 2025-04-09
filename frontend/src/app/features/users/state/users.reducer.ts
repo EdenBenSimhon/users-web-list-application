@@ -44,7 +44,15 @@ export function usersReducer(
       return {
         ...state,
         users: state.users.map((user) =>
-          user.id === action.payload.user.id ? action.payload.user : user
+          user.id === action.payload.id
+            ? Object.assign({}, user, {
+                job: action.payload.job,
+                first_name: action.payload.name,
+                last_name: user.last_name,
+                avatar: user.avatar,
+                email: user.email,
+              })
+            : user
         ),
 
         loading: false,
@@ -62,7 +70,7 @@ export function usersReducer(
     case UsersActionTypes.DeleteUserSuccessAction:
       return {
         ...state,
-        users: state.users.filter((user) => user.id !== action.payload.id),
+        users: state.users.filter((user) => user.id != action.payload.id),
         loading: false,
         error: null,
       };

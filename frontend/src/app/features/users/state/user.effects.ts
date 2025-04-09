@@ -49,7 +49,6 @@ export class UserEffects {
   readonly deleteUser$ = createEffect(() =>
     this._actions$.pipe(
       ofType<DeleteUserAction>(UsersActionTypes.DeleteUserAction),
-      tap((payload) => console.log('deleteUser', payload)),
       switchMap(({ payload }) =>
         this._userService.deleteUser(payload.id).pipe(
           map(() => new DeleteUserSuccessAction({ id: payload.id })),
@@ -63,10 +62,19 @@ export class UserEffects {
     this._actions$.pipe(
       ofType<UpdateUserAction>(UsersActionTypes.UpdateUserAction),
       switchMap(({ payload }) =>
-        this._userService.updateUser(payload.id, payload.user).pipe(
-          map((user) => new UpdateUserSuccessAction({ user })),
-          catchError((error) => of(new FailedAction({ error })))
-        )
+        this._userService
+          .updateUser(payload.id, payload.name, payload.job)
+          .pipe(
+            map(
+              (user) =>
+                new UpdateUserSuccessAction({
+                  id: payload.id,
+                  name: payload.name,
+                  job: payload.job,
+                })
+            ),
+            catchError((error) => of(new FailedAction({ error })))
+          )
       )
     )
   );

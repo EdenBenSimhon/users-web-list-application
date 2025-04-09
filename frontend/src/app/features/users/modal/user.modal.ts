@@ -1,11 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  startWith,
+  tap,
+} from 'rxjs';
+import { User } from '../state/user.model';
 
 @Component({
   selector: 'app-user-modal',
@@ -13,13 +27,35 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrl: './user.modal.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserModal {
+export class UserModal implements OnInit {
+  title: 'Create User' | 'Update User' = 'Create User';
+  readonly updatedUser$ = new BehaviorSubject<boolean>(false); // BehaviorSubject for user data
+
   userForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     job: new FormControl('', [Validators.required]),
   });
 
-  constructor(public readonly dialogRef: MatDialogRef<UserModal>) {}
+  constructor(
+    public readonly dialogRef: MatDialogRef<UserModal>,
+
+    @Inject(MAT_DIALOG_DATA)
+    public data: { user: User; id: string }
+  ) {
+    if (data) {
+      this.updatedUser$.next(true);
+    }
+  }
+  ngOnInit(): void {
+    if (this.data && this.data.user) {
+      this.updatedUser$.next(true);
+      this.title = 'Update User';
+      this.userForm.patchValue({
+        name: this.data.user.first_name,
+        job: '',
+      });
+    }
+  }
 
   onSubmit() {
     if (this.userForm.valid) {
