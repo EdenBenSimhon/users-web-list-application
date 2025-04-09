@@ -5,7 +5,6 @@ import { corsOptions } from './core/config/config';
 import { connectToDatabase } from './core/config/db';
 import { apiUserRouter } from './api/routes/api-user/router';
 import { userRouter } from './api/routes/user/router';
-import { authMiddleware } from './api/middlewares/auth.middleware';
 import { errorHandler } from './api/middlewares/error.middleware';
 dotenv.config();
 
@@ -20,7 +19,6 @@ async function startService() {
 
   app.use('/api', apiUserRouter);
 
-  // Add the error handler as the last middleware
   app.use(errorHandler);
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {

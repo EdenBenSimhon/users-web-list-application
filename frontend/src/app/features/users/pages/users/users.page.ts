@@ -1,30 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   AddUserAction,
   DeleteUserAction,
   GetUsersAction,
-  UpdateUserAction,
 } from '../../state/users.actions';
 import { usersSelectors } from '../../state/user.selectors';
-import { AuthService } from '../../../../core/auth/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModal } from '../../modal/user.modal';
-import { User } from '../../state/user.model';
 import {
   BehaviorSubject,
   distinctUntilChanged,
-  firstValueFrom,
-  map,
-  Observable,
   shareReplay,
   Subject,
   takeUntil,

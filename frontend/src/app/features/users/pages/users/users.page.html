@@ -2,7 +2,6 @@
 <app-header
 (addUserEvent)="addUser()"></app-header>
 <ng-container *ngIf ="users$ | async as state" >
-  
     <div class="pagination">
         <button (click)="changePage(-1)" [disabled]="currentPage$.value === 1">Prev</button>
         <span>Page: {{ currentPage$ | async }}</span>

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config(); // לקרוא רק פעם אחת
+dotenv.config();
 
 const mongoURI = process.env.MONGO_URI;
 
