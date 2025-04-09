@@ -12,6 +12,7 @@ import {
   UpdateUserAction,
 } from '../../state/users.actions';
 import { usersSelectors } from '../../state/user.selectors';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,7 @@ import { usersSelectors } from '../../state/user.selectors';
 export class UsersPage implements OnInit {
   constructor(
     private readonly _store: Store,
-    private readonly cd: ChangeDetectorRef
+    private readonly _authSerivce: AuthService
   ) {}
 
   readonly users$ = this._store.select(usersSelectors);
@@ -42,15 +43,17 @@ export class UsersPage implements OnInit {
   }
 
   updateUser(id: string) {
-    console.log(id);
     this._store.dispatch(
       new UpdateUserAction({ id, user: { name: 's Doe', job: 'Developer' } })
     );
-    this.cd.detectChanges();
   }
 
   getUsers() {
     this._store.dispatch(new GetUsersAction());
+  }
+
+  logOut() {
+    this._authSerivce.logout();
   }
 
   virtualScroll() {}

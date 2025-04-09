@@ -10,12 +10,15 @@ import { EffectsModule, provideEffects } from '@ngrx/effects';
 import { UserEffects } from './state/user.effects';
 import { AuthGuard } from '../../core/auth/guards/auth.guard';
 import { MatCard, MatCardModule } from '@angular/material/card';
+import { HeaderComponent } from '../../shared/header/header.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [UserCardComponent, UsersPage],
+  declarations: [UserCardComponent, UsersPage, HeaderComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
+    RouterModule,
     MatCardModule,
     StoreModule.forFeature('user', usersReducer),
     EffectsModule.forFeature([UserEffects]),

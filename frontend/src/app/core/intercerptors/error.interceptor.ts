@@ -6,8 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 export enum HttpErrorCode {
   BadRequest = 400,
@@ -17,8 +16,6 @@ export enum HttpErrorCode {
 }
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor() {}
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler

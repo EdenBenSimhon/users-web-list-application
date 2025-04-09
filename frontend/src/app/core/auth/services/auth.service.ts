@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../../environment';
 
 @Injectable({
@@ -27,10 +27,11 @@ export class AuthService {
   ): Observable<boolean> {
     const loginPayload = { username, password };
 
-    return this._http.post<any>(this._apiUrl, loginPayload).pipe(
+    return this._http.post<{ token: string }>(this._apiUrl, loginPayload).pipe(
       map((response) => {
         if (response && response.token) {
           localStorage.setItem(this.tokenKey, response.token);
+          this._router.navigate(['/users']);
           return true;
         } else {
           return false;

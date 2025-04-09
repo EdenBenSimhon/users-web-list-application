@@ -1,23 +1,18 @@
-<app-header></app-header>
 <mat-toolbar class="header">
     <div class="header__logo">
-        welcome to our app
+        welcome to user management system
     </div>
-  
     <div class="header__actions">
-      <button mat-icon-button (click)="addUser.emit()" aria-label="Add User">
+      <button  (click)="addUser.emit()" >
         add user
       </button>
-  
-      <button mat-icon-button (click)="editUser.emit()" aria-label="Edit User">
+      <button (click)="editUser.emit()">
         edit
       </button>
-  
-      <button mat-icon-button (click)="deleteUser.emit()" aria-label="Delete User">
+      <button  (click)="deleteUser.emit()" >
        delete
       </button>
-  
-      <button mat-icon-button (click)="logout()" aria-label="Logout">
+      <button (click)="logout()">
         logout
       </button>
     </div>

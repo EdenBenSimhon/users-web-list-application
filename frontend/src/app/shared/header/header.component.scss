@@ -5,6 +5,7 @@
     padding: 0 1rem;
     gap: 1rem;
     width: 100%;
+    background-color: #fff;
 
     &__actions {
       display: flex;
@@ -14,7 +15,12 @@
     }
   
     button {
-      color: white;
+      color: black;
+      border: 1px solid black;  
+      border-radius: 1rem;
+    }
+    button:hover {
+      background-color: white;
     }
   }
   

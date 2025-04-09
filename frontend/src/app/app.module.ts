@@ -7,8 +7,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule, provideEffects } from '@ngrx/effects';
 import {
   HTTP_INTERCEPTORS,
+  HttpClient,
   HttpClientModule,
   provideHttpClient,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,9 +27,9 @@ import { ErrorInterceptor } from './core/intercerptors/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     LoginComponent,
     RegisterComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,7 @@ import { ErrorInterceptor } from './core/intercerptors/error.interceptor';
     EffectsModule.forRoot([]),
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,

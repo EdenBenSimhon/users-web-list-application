@@ -17,6 +17,7 @@
     
     <mat-card-actions class="login-container__actions">
       <button class="login-container__submit-button" mat-raised-button [disabled]="!loginForm.valid" (click)="onSubmit()" color="primary">Login</button>
+      <button class="login-container__submit-button" mat-raised-button   [routerLink]="['/register']" color="primary">go to register</button>
     </mat-card-actions>
   </mat-card>
 </div>
