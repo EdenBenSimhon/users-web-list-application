@@ -39,7 +39,6 @@ export class UserEffects {
       ofType<AddUserAction>(UsersActionTypes.AddUserAction),
       switchMap(({ payload }) =>
         this._userService.createUser(payload.name, payload.job).pipe(
-          tap((user) => console.log(user)),
           map((user) => new AddUserSuccessAction({ user })),
           catchError((error) => of(new FailedAction({ error })))
         )

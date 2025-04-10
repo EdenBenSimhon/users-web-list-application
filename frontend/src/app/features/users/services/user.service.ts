@@ -27,7 +27,6 @@ export class UserService {
     const url = `${this.apiUrl}/createUser`;
     return this.http.post<User>(url, { name, job }).pipe(
       map((response: User) => {
-        console.log(response);
         return {
           id: response.id || '',
           email: response.email,
