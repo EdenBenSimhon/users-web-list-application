@@ -95,7 +95,6 @@ export const createUser = async (
       email: newUser1.email,
       avatar: newUser1.avatar,
     };
-    await apiService.createUser(name, job);
     res.status(201).json(user);
   } catch (error) {
     next(error);
@@ -120,7 +119,6 @@ export const updateUser = async (
       { new: true }
     );
 
-    await apiService.updateUser(id, name, job);
     if (!updatedUser) {
       throw new NotFoundError('User not found');
     }
@@ -138,8 +136,7 @@ export const deleteUser = async (
   try {
     const { id } = req.params;
     const deletedUser = await ApiUserModel.findOneAndDelete({ id: id });
-    const deleted = await apiService.deleteUser(id);
-    if (!deletedUser || !deleted) {
+    if (!deletedUser) {
       throw new NotFoundError('User not found');
     }
     res.status(204).send();
