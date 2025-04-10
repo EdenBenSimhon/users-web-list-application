@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'https://reqres.in/api/users';
 
 export const apiService = {
-  async fetchUsers(page: string) {
+  async fetchUsers(page: number) {
     const response = await axios.get(`${API_URL}?page=${page}`);
     return response.data.data;
   },

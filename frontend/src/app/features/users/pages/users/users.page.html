@@ -7,12 +7,11 @@
         <span>Page: {{ currentPage$ | async }}</span>
         <button (click)="changePage(1)">Next</button>
       </div>
-      <cdk-virtual-scroll-viewport itemSize="50" class="virtual-viewport">
-      <div class="user-page" >
+      
+      <div class="user-page"  >
       <app-user-card   [ngStyle]="{ cursor: 'pointer' }" 
-      *cdkVirtualFor="let user of state.users" 
+      *ngFor="let user of state.users" 
       [user]="user" ></app-user-card>
     </div>
-  </cdk-virtual-scroll-viewport>
 </ng-container >
 

@@ -25,16 +25,16 @@ export class UserService {
 
   createUser(name: string, job: string): Observable<User> {
     const url = `${this.apiUrl}/createUser`;
-    return this.http.post<Partial<User>>(url, { name, job }).pipe(
-      map((response: Partial<User>) => {
-        const [first_name, last_name] = name ? name.split(' ') : ['', ''];
+    return this.http.post<User>(url, { name, job }).pipe(
+      map((response: User) => {
+        console.log(response);
         return {
           id: response.id || '',
-          email: 'user@created.com',
-          first_name,
-          last_name,
+          email: response.email,
+          first_name: response.first_name,
+          last_name: response.last_name,
           job: response.job,
-          avatar: 'url://default-avatar.png',
+          avatar: response.avatar,
         };
       })
     );
