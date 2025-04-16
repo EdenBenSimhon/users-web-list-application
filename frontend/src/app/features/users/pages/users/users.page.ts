@@ -36,10 +36,12 @@ export class UsersPage implements OnDestroy {
   );
 
 
-  readonly users$ = this.currentPage$.pipe(
+   readonly users$ = this.currentPage$.pipe(
     distinctUntilChanged(),
-    switchMap((page) => this._store.select(usersSelectors(page)))
+    switchMap((page) => this._store.select(usersSelectors(page))),
+    takeUntil(this._destroy$)
   );
+ 
   
   constructor(
     private readonly _store: Store,
