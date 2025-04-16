@@ -42,7 +42,7 @@ export class UserCardComponent implements OnDestroy {
           this._store.dispatch(
             new UpdateUserAction({
               id,
-              name: data.name,
+              first_name: data.name,
               job: data.job,
             })
           );

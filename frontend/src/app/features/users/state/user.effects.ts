@@ -27,7 +27,7 @@ export class UserEffects {
       ofType<GetUsersAction>(UsersActionTypes.GetUsersAction),
       switchMap(({ payload }) =>
         this._userService.getUsers(payload.page).pipe(
-          map((users) => new GetUsersSuccessAction({ users })),
+          map((users) => new GetUsersSuccessAction({ users,page:payload.page })),
           catchError((error) => of(new FailedAction({ error })))
         )
       )
@@ -38,8 +38,8 @@ export class UserEffects {
     this._actions$.pipe(
       ofType<AddUserAction>(UsersActionTypes.AddUserAction),
       switchMap(({ payload }) =>
-        this._userService.createUser(payload.name, payload.job).pipe(
-          map((user) => new AddUserSuccessAction({ user })),
+        this._userService.createUser(payload.first_name, payload.job).pipe(
+          map((user) => new AddUserSuccessAction({ user,page:payload.page })),
           catchError((error) => of(new FailedAction({ error })))
         )
       )
@@ -63,13 +63,11 @@ export class UserEffects {
       ofType<UpdateUserAction>(UsersActionTypes.UpdateUserAction),
       switchMap(({ payload }) =>
         this._userService
-          .updateUser(payload.id, payload.name, payload.job)
+          .updateUser(payload.id, payload.first_name, payload.job)
           .pipe(
-            map(
-              (user) =>
-                new UpdateUserSuccessAction({
+            map(() => new UpdateUserSuccessAction({
                   id: payload.id,
-                  name: payload.name,
+                  first_name: payload.first_name,
                   job: payload.job,
                 })
             ),

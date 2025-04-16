@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { User } from '../state/user.model';
 import { environment } from '../../../../environment';
 
@@ -23,27 +23,32 @@ export class UserService {
     return this.http.get<any>(url).pipe(map((response) => response.user));
   }
 
-  createUser(name: string, job: string): Observable<User> {
+  createUser(first_name: string, job: string): Observable<User> {
     const url = `${this.apiUrl}/createUser`;
-    return this.http.post<User>(url, { name, job }).pipe(
-      map((response: User) => {
-        return {
-          id: response.id || '',
-          email: response.email,
-          first_name: response.first_name,
-          last_name: response.last_name,
-          job: response.job,
-          avatar: response.avatar,
-        };
+    return this.http
+      .post<{newUser:{ name: string; job: string; id: string} }>(url, {
+        name: first_name,
+        job,
       })
-    );
+      .pipe(
+        map((response: {newUser:{ name: string; job: string; id: string} }) => {
+          return {
+            id: response.newUser.id || '',
+            email: 'created@movement.com',
+            first_name: response.newUser.name,
+            last_name: response.newUser.name,
+            job: response.newUser.job,
+            avatar: 'avatar.png',
+          };
+        })
+      );
   }
 
   updateUser(
     id: string,
     name: string,
     job: string
-  ): Observable<{ id: string; name: string; job: string }> {
+  ): Observable<{ id: string; first_name: string; job: string }> {
     const url = `${this.apiUrl}/updateUser/${id}`;
     return this.http
       .put<{ name: string; job: string }>(url, { name, job })
@@ -51,16 +56,15 @@ export class UserService {
         map((response: { name: string; job: string }) => {
           return {
             id,
-            name: response.name,
+            first_name: response.name,
             job: response.job,
           };
-        })
+        }),
       );
   }
 
   deleteUser(id: string): Observable<void> {
     const url = `${this.apiUrl}/deleteUser/${id}`;
-
     return this.http.delete<void>(url);
   }
 }

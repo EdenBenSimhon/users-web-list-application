@@ -15,46 +15,46 @@ export enum UsersActionTypes {
 
 export class GetUsersAction implements Action {
   public readonly type = UsersActionTypes.GetUsersAction;
-  constructor(public payload: { page: number }) {}
+  constructor(public readonly payload: { page: number }) {}
 }
 export class GetUsersSuccessAction implements Action {
   public readonly type = UsersActionTypes.GetUsersSuccessAction;
-  constructor(public payload: { users: User[] }) {}
+  constructor(public readonly payload:  { page: number; users: User[] }) {}
 }
 
 export class UpdateUserAction implements Action {
   public readonly type = UsersActionTypes.UpdateUserAction;
-  constructor(public payload: { id: string; name: string; job: string }) {}
+  constructor(public readonly payload: { id: string; first_name: string; job: string }) {}
 }
 
 export class UpdateUserSuccessAction implements Action {
   public readonly type = UsersActionTypes.UpdateUserSuccessAction;
-  constructor(public payload: { id: string; name: string; job: string }) {}
+  constructor(public readonly payload: { id: string; first_name: string; job: string }) {}
 }
 
 export class AddUserAction implements Action {
   public readonly type = UsersActionTypes.AddUserAction;
-  constructor(public payload: { name: string; job: string }) {}
+  constructor(public readonly payload: { first_name: string; job: string ,page:number} ) {}
 }
 
 export class AddUserSuccessAction implements Action {
   public readonly type = UsersActionTypes.AddUserSuccessAction;
-  constructor(public payload: { user: User }) {}
+  constructor(public readonly payload: { user: User,  page: number  }) {}
 }
 
 export class FailedAction implements Action {
   public readonly type = UsersActionTypes.FailedAction;
-  constructor(public payload: { error: Error }) {}
+  constructor(public readonly payload: { error: Error }) {}
 }
 
 export class DeleteUserAction implements Action {
   public readonly type = UsersActionTypes.DeleteUserAction;
-  constructor(public payload: { id: string }) {}
+  constructor(public readonly payload: { id: string }) {}
 }
 
 export class DeleteUserSuccessAction implements Action {
   public readonly type = UsersActionTypes.DeleteUserSuccessAction;
-  constructor(public payload: { id: string }) {}
+  constructor(public readonly payload: { id: string }) {}
 }
 
 export type UsersActions =

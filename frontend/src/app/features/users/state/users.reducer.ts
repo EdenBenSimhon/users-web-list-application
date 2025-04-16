@@ -4,23 +4,29 @@ import { User } from './user.model';
 
 export const usersFeatureKey = 'user';
 
-export interface UserState {
-  users: User[];
+export interface UsersState {
+  usersByPage: { [page: number]: User[] };
+  createdUsers: (User & { page: number })[];
+  updatedUsers: { [id: string]: Partial<User> };
+  deletedUsers: Set<string>;
   loading: boolean;
   error: Error | null;
 }
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>();
 
-export const initialState: UserState = {
-  users: [],
+export const initialState: UsersState = {
+  usersByPage: {},
+  createdUsers: [],
+  updatedUsers: {},
+  deletedUsers: new Set(),
   loading: false,
   error: null,
 };
 
 export function usersReducer(
-  state: UserState = initialState,
+  state: UsersState = initialState,
   action: UsersActions
-): UserState {
+): UsersState {
   switch (action.type) {
     case UsersActionTypes.GetUsersAction:
     case UsersActionTypes.UpdateUserAction:
@@ -34,26 +40,28 @@ export function usersReducer(
     case UsersActionTypes.GetUsersSuccessAction:
       return {
         ...state,
-        users: action.payload.users,
+        usersByPage: {
+          ...state.usersByPage,
+          [action.payload.page]: action.payload.users.filter(
+            (user) => !state.deletedUsers.has(user.id)
+          ),
+        },
         loading: false,
         error: null,
       };
 
     case UsersActionTypes.UpdateUserSuccessAction:
+      const { id, first_name, job } = action.payload;
+      const updatedCreatedUsers = state.createdUsers.map(user =>
+        user.id === id ? { ...user, first_name, job } : user
+      );
       return {
         ...state,
-        users: state.users.map((user) =>
-          user.id === action.payload.id
-            ? Object.assign({}, user, {
-                job: action.payload.job,
-                first_name: action.payload.name,
-                last_name: user.last_name,
-                avatar: user.avatar,
-                email: user.email,
-              })
-            : user
-        ),
-
+        createdUsers: updatedCreatedUsers,
+        updatedUsers: {
+          ...state.updatedUsers,
+          [id]: { ...state.updatedUsers[id], first_name, job } as Partial<User>,
+        },
         loading: false,
         error: null,
       };
@@ -61,7 +69,13 @@ export function usersReducer(
     case UsersActionTypes.AddUserSuccessAction:
       return {
         ...state,
-        users: [...state.users, action.payload.user],
+        createdUsers: [
+          ...state.createdUsers,
+          {
+            ...action.payload.user, 
+            page: action.payload.page 
+          }
+        ],
         loading: false,
         error: null,
       };
@@ -69,7 +83,11 @@ export function usersReducer(
     case UsersActionTypes.DeleteUserSuccessAction:
       return {
         ...state,
-        users: state.users.filter((user) => user.id != action.payload.id),
+        deletedUsers: new Set(state.deletedUsers).add(action.payload.id),
+        createdUsers : state.createdUsers.filter(user => user.id != action.payload.id) ,
+        updatedUsers: Object.fromEntries(
+          Object.entries(state.updatedUsers).filter(([key]) => key != action.payload.id)
+        ),
         loading: false,
         error: null,
       };
